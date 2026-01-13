@@ -1,4 +1,4 @@
-package listener;
+package consumer;
 
 public class Test
 {

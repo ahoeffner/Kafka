@@ -1,0 +1,1 @@
+java -Dorg.slf4j.simpleLogger.defaultLogLevel=error -jar target/Consumer-1.0-SNAPSHOT.jar $*
