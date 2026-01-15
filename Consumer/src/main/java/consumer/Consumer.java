@@ -38,7 +38,7 @@ public class Consumer
 
   public void consume()
   {
-    System.out.println("\n\nListening for messages\n\n");
+    System.out.println("\n\nConsuming messages\n\n");
 
     while(running)
     {

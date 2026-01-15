@@ -1,3 +1,4 @@
+import argparse
 from confluent_kafka import Producer
 
 class PYProducer:
@@ -15,12 +16,17 @@ class PYProducer:
         if err is not None:
             print(f"Message delivery failed: {err}")
         else:
-            print(f"Message delivered to {msg.topic()} [{msg.partition()}]")
+            print(f"Message delivered to partition [{msg.partition()}]")
 
 
 if __name__ == "__main__":
-    print("Starting Producer...")
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("key")
+    parser.add_argument("value")
+
+    args = parser.parse_args()
+
     client = PYProducer({'bootstrap.servers': 'localhost:9092'})
-    client.send('testtopic', '1', 'value1')
+    client.send('testtopic', args.key, args.value)
     client.flush()
-    print("Producer finished.")
