@@ -24,6 +24,8 @@ public class Consumer
     Properties props = new Properties();
     props.put("group.id",group);
     props.put(ConsumerConfig.GROUP_ID_CONFIG,group);
+    props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092");
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class.getName());
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class.getName());
@@ -43,7 +45,13 @@ public class Consumer
     while(running)
     {
       ConsumerRecords<String,String> records = consumer.poll(Duration.ofSeconds(poll));
-      for(ConsumerRecord<String,String> record : records) System.out.println(record.topic()+" received: "+record.key()+" "+record.value());
+      /* Do some processing */
+
+      for(ConsumerRecord<String,String> record : records)
+        System.out.println(record.topic()+" received: <"+record.value()+">");
+
+      /* Commit the offsets */
+      if (!records.isEmpty()) consumer.commitSync();
     }
 
     consumer.close();

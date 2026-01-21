@@ -16,7 +16,9 @@ public class Main
 
     Topic topic = new Topic();
 
-    topic.delete(name);
+    try {topic.delete(name);}
+    catch (Exception e) {System.err.println(e.getMessage());}
+
     topic.create(name, partitions);
 
     System.out.println("Topic created: " + name + " with " + partitions + " partitions");

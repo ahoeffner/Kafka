@@ -1,4 +1,4 @@
-import argparse
+import sys
 from confluent_kafka import Producer
 
 class PYProducer:
@@ -20,13 +20,9 @@ class PYProducer:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("key")
-    parser.add_argument("value")
-
-    args = parser.parse_args()
+    args = sys.argv[1:]
+    args = " ".join(args)
 
     client = PYProducer({'bootstrap.servers': 'localhost:9092'})
-    client.send('testtopic', args.key, args.value)
+    client.send('testtopic', None, args)
     client.flush()
