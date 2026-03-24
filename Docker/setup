@@ -1,0 +1,11 @@
+docker volume create kafka-data
+docker volume create kafka-logs
+docker volume create kafka-config
+docker volume create kafka-secrets
+
+# 2. Set permissions for the Kafka user (UID 1000)
+
+docker run --rm -v kafka-data:/mnt busybox chown -R 1000:1000 /mnt
+docker run --rm -v kafka-logs:/mnt busybox chown -R 1000:1000 /mnt
+docker run --rm -v kafka-config:/mnt busybox chown -R 1000:1000 /mnt
+docker run --rm -v kafka-secrets:/mnt busybox chown -R 1000:1000 /mnt
